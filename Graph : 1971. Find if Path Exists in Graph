@@ -1,0 +1,22 @@
+/* 1971. Find if Path Exists in Graph
+  Link: https://leetcode.com/problems/find-if-path-exists-in-graph/description/
+*/
+class Solution {
+public:
+    bool dfs(int n , vector<int>adj[] , int src , int dest , vector<bool>&vis){
+        if(src==dest) return true;
+        vis[src]=true;
+        for(auto node:adj[src])
+            if(!vis[node] and dfs(n,adj,node,dest,vis)) return true;
+        return false;
+    }
+    bool validPath(int n, vector<vector<int>>& edges, int source, int destination) {
+        vector<int>adj[n];
+        for(auto &e:edges){
+            adj[e[0]].push_back(e[1]);
+            adj[e[1]].push_back(e[0]);
+        }
+        vector<bool>vis(n,false);
+        return dfs(n,adj,source,destination,vis);
+    }
+};
